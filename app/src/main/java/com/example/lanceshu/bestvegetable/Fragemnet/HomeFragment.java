@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     Content.INSTANCE.setProducts(GetProductInfo.INSTANCE.handleProductInfo(response.body().string()));
                     adapter = new ProductAdapter(Content.INSTANCE.getProducts(),getContext());
-                    adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
                 }
             });

@@ -6,12 +6,18 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import com.example.lanceshu.bestvegetable.Content
 import com.example.lanceshu.bestvegetable.Fragemnet.HomeFragment
 import com.example.lanceshu.bestvegetable.R
+import com.example.lanceshu.bestvegetable.Utils.GetGuest
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,7 +36,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * */
     fun initData(){
 
+        GetGuest.findGuest(object : Callback {
+            override fun onFailure(call: Call?, e: IOException?) {
+                Log.e("error",e.toString())
+            }
 
+            override fun onResponse(call: Call?, response: Response?) {
+                Log.e("response",response!!.body().string())
+            }
+
+        })
     }
 
     /**
@@ -62,15 +77,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_all -> {
+                toolbar.setTitle("优菜网")
                 replaceFragment(HomeFragment())
             }
             R.id.nav_car -> {
+                toolbar.setTitle("购物车")
 
             }
             R.id.nav_form -> {
+                toolbar.setTitle("我的订单")
 
             }
             R.id.nav_account -> {
+                toolbar.setTitle("个人设置")
 
             }
         }
