@@ -1,6 +1,8 @@
 package com.example.lanceshu.bestvegetable.Fragemnet;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,13 +14,8 @@ import android.view.ViewGroup;
 import com.example.lanceshu.bestvegetable.Adapter.ProductAdapter;
 import com.example.lanceshu.bestvegetable.Content;
 import com.example.lanceshu.bestvegetable.R;
-import com.example.lanceshu.bestvegetable.Utils.GetProductInfo;
-
-import java.io.IOException;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import static com.example.lanceshu.bestvegetable.Content.*;
+
 /**
  * Created by lanceshu on 17-12-7.
  */
@@ -38,31 +35,26 @@ public class HomeFragment extends Fragment {
     }
 
     private void initData() {
-
-        if(Content.INSTANCE.getProducts().size() == 0){
-            GetProductInfo.INSTANCE.getInfo(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1:
+                        adapter = new ProductAdapter(Content.products,getContext());
+                        recyclerView.setAdapter(adapter);
+                        break;
                 }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Content.INSTANCE.setProducts(GetProductInfo.INSTANCE.handleProductInfo(response.body().string()));
-                    adapter = new ProductAdapter(Content.INSTANCE.getProducts(),getContext());
-                    recyclerView.setAdapter(adapter);
-                }
-            });
-        }
-
-
+            }
+        };
     }
 
     private void initWight(View view) {
         recyclerView = view.findViewById(R.id.home_recycler);
         GridLayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
-        adapter = new ProductAdapter(Content.INSTANCE.getProducts(),getContext());
-        recyclerView.setAdapter(adapter);
+        if(Content.products != null){
+            adapter = new ProductAdapter(Content.products,getContext());
+            recyclerView.setAdapter(adapter);
+        }
     }
 }

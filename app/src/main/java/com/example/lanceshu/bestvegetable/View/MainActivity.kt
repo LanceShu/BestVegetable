@@ -1,6 +1,7 @@
 package com.example.lanceshu.bestvegetable.View
 
 import android.os.Bundle
+import android.os.Message
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -12,6 +13,7 @@ import com.example.lanceshu.bestvegetable.Content
 import com.example.lanceshu.bestvegetable.Fragemnet.HomeFragment
 import com.example.lanceshu.bestvegetable.R
 import com.example.lanceshu.bestvegetable.Utils.GetGuest
+import com.example.lanceshu.bestvegetable.Utils.GetProductInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import okhttp3.Call
@@ -35,6 +37,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * 初始化数据;
      * */
     fun initData(){
+
+        if (Content.products.size == 0) {
+            GetProductInfo.getInfo(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                @Throws(IOException::class)
+                override fun onResponse(call: Call, response: Response) {
+                    Content.products = GetProductInfo.handleProductInfo(response.body().string())
+                    var message = Message.obtain()
+                    message.what = 1
+                    Content.handler.sendMessage(message)
+                }
+            })
+        }
 
         GetGuest.findGuest(object : Callback {
             override fun onFailure(call: Call?, e: IOException?) {
