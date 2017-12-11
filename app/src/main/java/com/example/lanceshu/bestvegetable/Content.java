@@ -14,7 +14,10 @@ import java.util.List;
 
 public class Content {
 
+    /*碎片管理者*/
     public static FragmentManager fragmentManager ;
+    /*无登录时的产品列表*/
     public static List<ProductBean> products = new ArrayList<>();
+    /*实例一个Handler*/
     public static Handler handler = new Handler();
 }
