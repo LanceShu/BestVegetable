@@ -34,6 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/colorFont"
+            android:maxLines="1"
             android:textSize="16sp"/>
 
     </LinearLayout>
@@ -62,6 +63,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/colorFont"
+            android:maxLines="1"
             android:textSize="16sp"/>
 
     </LinearLayout>

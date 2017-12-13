@@ -18,6 +18,8 @@ public class Content {
     public static FragmentManager fragmentManager ;
     /*无登录时的产品列表*/
     public static List<ProductBean> products = new ArrayList<>();
+    /*登录时的产品报价*/
+    public static List<Double> prices = new ArrayList<>();
     /*实例一个Handler*/
     public static Handler handler = new Handler();
 }

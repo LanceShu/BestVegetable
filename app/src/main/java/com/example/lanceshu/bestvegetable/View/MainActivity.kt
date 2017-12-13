@@ -64,45 +64,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             })
         }
 
-        val headerView = nav_view.getHeaderView(0)
-        val login : TextView = headerView.findViewById(R.id.isLogin)
-        login.setOnClickListener {
-            val dialog = Dialog(this@MainActivity)
-            dialog.setContentView(R.layout.login_layout)
-            val name : EditText = dialog.findViewById(R.id.name)
-            val pass : EditText = dialog.findViewById(R.id.pass)
-            val login : Button = dialog.findViewById(R.id.login)
-            login.setOnClickListener {
-                if(name.text.toString() != "" && pass.text.toString() != ""){
-                    GetGuest.findGuest(name.text.toString(),pass.text.toString(),object : Callback {
-                        override fun onFailure(call: Call?, e: IOException?) {
-                            Log.e("error",e.toString())
-                        }
-
-                        override fun onResponse(call: Call?, response: Response?) {
-                            val resp = response!!.body().string()
-                            val status = GetGuest.getLoginState(resp)
-                            Log.e("status",status)
-                            if(status == "success"){
-                                GetGuest.getGuestInfor(resp)
-                                runOnUiThread {
-                                    Toast.makeText(this@MainActivity,"登录成功,"+GuestBean.getInstance().gname,Toast.LENGTH_SHORT).show()
-                                }
-                            }else{
-                                runOnUiThread {
-                                    Toast.makeText(this@MainActivity,"账号密码不匹配~",Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        }
-
-                    })
-                }else{
-                    Toast.makeText(this@MainActivity,"账号密码不能为空~~",Toast.LENGTH_SHORT).show()
-                }
-            }
-            dialog.show()
-        }
-
     }
 
     /**
@@ -119,6 +80,79 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         replaceFragment(HomeFragment())
+
+        val headerView = nav_view.getHeaderView(0)
+        val tlogin : TextView = headerView.findViewById(R.id.isLogin)
+        tlogin.setOnClickListener {
+            val dialog = Dialog(this@MainActivity)
+            dialog.setContentView(R.layout.login_layout)
+            val name : EditText = dialog.findViewById(R.id.name)
+            val pass : EditText = dialog.findViewById(R.id.pass)
+            val login : Button = dialog.findViewById(R.id.login)
+            login.setOnClickListener {
+                if(name.text.toString() != "" && pass.text.toString() != "" && GuestBean.getInstance() == null){
+                    GetGuest.findGuest(name.text.toString(),pass.text.toString(),object : Callback {
+                        override fun onFailure(call: Call?, e: IOException?) {
+                            Log.e("error",e.toString())
+                        }
+
+                        override fun onResponse(call: Call?, response: Response?) {
+                            val resp = response!!.body().string()
+                            val status = GetGuest.getLoginState(resp)
+                            Log.e("status",status)
+                            if(status == "success"){
+                                GetGuest.getGuestInfor(resp)
+                                /*获取用户的报价单*/
+                                GetGuest.getUserPrice()
+                                runOnUiThread {
+                                    dialog.dismiss()
+                                    Toast.makeText(this@MainActivity,"登录成功,"+GuestBean.getInstance().gname,Toast.LENGTH_SHORT).show()
+                                    tlogin.text = GuestBean.getInstance().gname + "  " + GuestBean.getInstance().gaddr
+                                    replaceFragment(HomeFragment())
+                                }
+                            }else{
+                                runOnUiThread {
+                                    Toast.makeText(this@MainActivity,"账号密码不匹配~",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    })
+                }else if(GuestBean.getInstance() != null){
+                    /*令用户变为null*/
+                    GuestBean.clearInstance()
+                    GetGuest.findGuest(name.text.toString(),pass.text.toString(),object : Callback {
+                        override fun onFailure(call: Call?, e: IOException?) {
+                            Log.e("error",e.toString())
+                        }
+
+                        override fun onResponse(call: Call?, response: Response?) {
+                            val resp = response!!.body().string()
+                            val status = GetGuest.getLoginState(resp)
+                            Log.e("status",status)
+                            if(status == "success"){
+                                GetGuest.getGuestInfor(resp)
+                                /*获取用户的报价单*/
+                                GetGuest.getUserPrice()
+                                runOnUiThread {
+                                    dialog.dismiss()
+                                    Toast.makeText(this@MainActivity,"登录成功,"+GuestBean.getInstance().gname,Toast.LENGTH_SHORT).show()
+                                    tlogin.text = GuestBean.getInstance().gname + "  " + GuestBean.getInstance().gaddr
+                                    replaceFragment(HomeFragment())
+                                }
+                            }else{
+                                runOnUiThread {
+                                    Toast.makeText(this@MainActivity,"账号密码不匹配~",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+
+                    })
+                } else{
+                    Toast.makeText(this@MainActivity,"账号密码不能为空~~",Toast.LENGTH_SHORT).show()
+                }
+            }
+            dialog.show()
+        }
 
     }
 
@@ -150,7 +184,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
