@@ -18,6 +18,18 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@mipmap/user" />
 
+    <TextView
+        android:id="@+id/isLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="请登录~"
+        android:textSize="16sp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/colorFont"
+        android:layout_toRightOf="@id/imageView"/>
+
 
     <TextView
         android:id="@+id/textView"

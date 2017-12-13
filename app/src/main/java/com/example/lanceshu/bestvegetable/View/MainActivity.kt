@@ -1,5 +1,6 @@
 package com.example.lanceshu.bestvegetable.View
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Message
 import android.support.design.widget.NavigationView
@@ -7,15 +8,23 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.example.lanceshu.bestvegetable.Content
+import com.example.lanceshu.bestvegetable.DataBean.GuestBean
 import com.example.lanceshu.bestvegetable.Fragemnet.HomeFragment
 import com.example.lanceshu.bestvegetable.R
 import com.example.lanceshu.bestvegetable.Utils.GetGuest
 import com.example.lanceshu.bestvegetable.Utils.GetProductInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -25,6 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -54,16 +64,45 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             })
         }
 
-        GetGuest.findGuest(object : Callback {
-            override fun onFailure(call: Call?, e: IOException?) {
-                Log.e("error",e.toString())
-            }
+        val headerView = nav_view.getHeaderView(0)
+        val login : TextView = headerView.findViewById(R.id.isLogin)
+        login.setOnClickListener {
+            val dialog = Dialog(this@MainActivity)
+            dialog.setContentView(R.layout.login_layout)
+            val name : EditText = dialog.findViewById(R.id.name)
+            val pass : EditText = dialog.findViewById(R.id.pass)
+            val login : Button = dialog.findViewById(R.id.login)
+            login.setOnClickListener {
+                if(name.text.toString() != "" && pass.text.toString() != ""){
+                    GetGuest.findGuest(name.text.toString(),pass.text.toString(),object : Callback {
+                        override fun onFailure(call: Call?, e: IOException?) {
+                            Log.e("error",e.toString())
+                        }
 
-            override fun onResponse(call: Call?, response: Response?) {
-                Log.e("response",response!!.body().string())
-            }
+                        override fun onResponse(call: Call?, response: Response?) {
+                            val resp = response!!.body().string()
+                            val status = GetGuest.getLoginState(resp)
+                            Log.e("status",status)
+                            if(status == "success"){
+                                GetGuest.getGuestInfor(resp)
+                                runOnUiThread {
+                                    Toast.makeText(this@MainActivity,"登录成功,"+GuestBean.getInstance().gname,Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                runOnUiThread {
+                                    Toast.makeText(this@MainActivity,"账号密码不匹配~",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
 
-        })
+                    })
+                }else{
+                    Toast.makeText(this@MainActivity,"账号密码不能为空~~",Toast.LENGTH_SHORT).show()
+                }
+            }
+            dialog.show()
+        }
+
     }
 
     /**
