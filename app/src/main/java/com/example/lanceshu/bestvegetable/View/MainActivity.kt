@@ -171,10 +171,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbar.setTitle("优菜网")
                 replaceFragment(HomeFragment())
             }
-            R.id.nav_car -> {
-                toolbar.setTitle("购物车")
-
-            }
             R.id.nav_form -> {
                 toolbar.setTitle("我的订单")
 

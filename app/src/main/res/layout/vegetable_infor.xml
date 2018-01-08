@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="360dp"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <ImageView
+        android:id="@+id/infor_image"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:scaleType="centerCrop"/>
+
+    <EditText
+        android:id="@+id/infor_edit"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="请输入数量"
+        android:gravity="center"
+        android:textColor="@color/colorFont"
+        android:textSize="16sp"
+        android:background="@null" />
+
+    <Button
+        android:id="@+id/infor_but"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="立即下单"
+        android:background="#d2e7ff"
+        android:textColor="@color/colorFont"
+        android:textSize="18sp"/>
+
+</LinearLayout>

@@ -1,11 +1,14 @@
 package com.example.lanceshu.bestvegetable.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +24,7 @@ import java.util.List;
  * Created by lanceshu on 17-12-7.
  */
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ProductBean> productBeans;
     private Context context;
@@ -39,8 +42,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder viewholder, int position) {
+        ViewHolder holder = (ViewHolder) viewholder;
         final ProductBean productBean = productBeans.get(position);
         holder.proName.setText(productBean.getPName());
         holder.proPrice.setText("单价： "+productBean.getPPrice()+"元/"+productBean.getPUnit());
@@ -52,10 +55,35 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,productBean.getPName(),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,productBean.getPName(),Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context,R.style.DialogTheme);
+                showDialog(dialog,productBean.getPImagfile(),productBean.getPName());
+            }
+        });
+    }
+
+    private void showDialog(final Dialog dialog, String pImagfile, final String name) {
+        dialog.setContentView(R.layout.vegetable_infor);
+        dialog.setCanceledOnTouchOutside(true);
+        ImageView image  = dialog.findViewById(R.id.infor_image);
+        final EditText editText = dialog.findViewById(R.id.infor_edit);
+        Button button = dialog.findViewById(R.id.infor_but);
+
+        Glide.with(context)
+                .load(pImagfile)
+                .centerCrop()
+                .into(image);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,name + "已下单" + editText.getText().toString() + "斤"
+                        ,Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
 
+        dialog.show();
     }
 
     @Override
