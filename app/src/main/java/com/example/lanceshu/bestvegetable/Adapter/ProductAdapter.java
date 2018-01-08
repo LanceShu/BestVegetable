@@ -65,9 +65,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void showDialog(final Dialog dialog, String pImagfile, final String name) {
         dialog.setContentView(R.layout.vegetable_infor);
         dialog.setCanceledOnTouchOutside(true);
+
+        TextView textView = dialog.findViewById(R.id.infor_text);
         ImageView image  = dialog.findViewById(R.id.infor_image);
         final EditText editText = dialog.findViewById(R.id.infor_edit);
         Button button = dialog.findViewById(R.id.infor_but);
+
+        textView.setText(name);
 
         Glide.with(context)
                 .load(pImagfile)

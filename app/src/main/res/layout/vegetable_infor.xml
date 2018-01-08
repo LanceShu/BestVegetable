@@ -5,6 +5,15 @@
     android:orientation="vertical"
     android:background="#fff">
 
+    <TextView
+        android:id="@+id/infor_text"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@color/colorPrimary"/>
+
     <ImageView
         android:id="@+id/infor_image"
         android:layout_width="match_parent"
@@ -28,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="立即下单"
-        android:background="#d2e7ff"
-        android:textColor="@color/colorFont"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
         android:textSize="18sp"/>
 
 </LinearLayout>

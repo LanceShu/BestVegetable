@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/vegetable"
+        android:title="蔬菜类"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/meat"
+        android:title="肉类"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/fish"
+        android:title="鱼类"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/drycargo"
+        android:title="干货粮油类"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/chandlery"
+        android:title="杂货类"
+        app:showAsAction="never"/>
+
+</menu>

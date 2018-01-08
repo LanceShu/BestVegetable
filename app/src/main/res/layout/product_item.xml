@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="180dp"
+    android:layout_width="match_parent"
     android:layout_height="220dp"
+    android:layout_margin="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview"
-        android:layout_width="175dp"
+        android:layout_width="match_parent"
         android:layout_height="210dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="10dp"

@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -66,6 +67,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.type_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item!!.itemId){
+            R.id.vegetable -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
     /**
      *初始化控件;
      * */
@@ -84,7 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView = nav_view.getHeaderView(0)
         val tlogin : TextView = headerView.findViewById(R.id.isLogin)
         tlogin.setOnClickListener {
-            val dialog = Dialog(this@MainActivity)
+            val dialog = Dialog(this@MainActivity,R.style.DialogTheme)
             dialog.setContentView(R.layout.login_layout)
             val name : EditText = dialog.findViewById(R.id.name)
             val pass : EditText = dialog.findViewById(R.id.pass)
