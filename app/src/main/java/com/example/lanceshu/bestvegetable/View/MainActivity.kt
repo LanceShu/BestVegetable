@@ -12,20 +12,18 @@ import android.support.v7.app.AppCompatDelegate
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.lanceshu.bestvegetable.Content
 import com.example.lanceshu.bestvegetable.DataBean.GuestBean
-import com.example.lanceshu.bestvegetable.Fragemnet.HomeFragment
+import com.example.lanceshu.bestvegetable.Fragemnet.*
 import com.example.lanceshu.bestvegetable.R
 import com.example.lanceshu.bestvegetable.Utils.GetGuest
 import com.example.lanceshu.bestvegetable.Utils.GetProductInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -75,12 +73,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
             R.id.vegetable -> {
-
+                replaceFragment(HomeFragment())
+            }
+            R.id.meat -> {
+                replaceFragment(MeatFragment())
+            }
+            R.id.fish -> {
+                replaceFragment(FishFragment())
+            }
+            R.id.drycargo -> {
+                replaceFragment(DrycargoFragment())
+            }
+            R.id.chandlery -> {
+                replaceFragment(ChandleryFragment())
             }
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     /**
      *初始化控件;
@@ -189,7 +198,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_form -> {
                 toolbar.setTitle("我的订单")
-
+                replaceFragment(OrderFragment())
             }
             R.id.nav_account -> {
                 toolbar.setTitle("个人设置")
