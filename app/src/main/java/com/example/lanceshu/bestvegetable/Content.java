@@ -22,4 +22,8 @@ public class Content {
     public static List<Double> prices = new ArrayList<>();
     /*实例一个Handler*/
     public static Handler handler = new Handler();
+    /*下单的列表*/
+    public static List<ProductBean> productBeans = new ArrayList<>();
+    /*登录状态*/
+    public static boolean isLogin = false;
 }

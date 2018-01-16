@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.lanceshu.bestvegetable.Content;
 import com.example.lanceshu.bestvegetable.DataBean.ProductBean;
 import com.example.lanceshu.bestvegetable.R;
 
@@ -55,14 +56,17 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(context,productBean.getPName(),Toast.LENGTH_SHORT).show();
-                Dialog dialog = new Dialog(context,R.style.DialogTheme);
-                showDialog(dialog,productBean.getPImagfile(),productBean.getPName());
+                if(Content.isLogin){
+                    Dialog dialog = new Dialog(context,R.style.DialogTheme);
+                    showDialog(dialog,productBean.getPImagfile(),productBean.getPName(),productBean);
+                }else{
+                    Toast.makeText(context,"您还未登录~",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void showDialog(final Dialog dialog, String pImagfile, final String name) {
+    private void showDialog(final Dialog dialog, String pImagfile, final String name, final ProductBean productBean) {
         dialog.setContentView(R.layout.vegetable_infor);
         dialog.setCanceledOnTouchOutside(true);
 
@@ -83,6 +87,8 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View view) {
                 Toast.makeText(context,name + "已下单" + editText.getText().toString() + "斤"
                         ,Toast.LENGTH_SHORT).show();
+                productBean.setPNum(Double.parseDouble(editText.getText().toString()));
+                Content.productBeans.add(productBean);
                 dialog.dismiss();
             }
         });

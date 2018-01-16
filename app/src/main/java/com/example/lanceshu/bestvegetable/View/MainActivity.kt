@@ -63,6 +63,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             })
         }
 
+        Content.productBeans.clear()
+        Content.isLogin = false
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -126,6 +129,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             val status = GetGuest.getLoginState(resp)
                             Log.e("status",status)
                             if(status == "success"){
+                                Content.isLogin = true
                                 GetGuest.getGuestInfor(resp)
                                 /*获取用户的报价单*/
                                 GetGuest.getUserPrice()
@@ -155,6 +159,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             val status = GetGuest.getLoginState(resp)
                             Log.e("status",status)
                             if(status == "success"){
+                                Content.isLogin = true
                                 GetGuest.getGuestInfor(resp)
                                 /*获取用户的报价单*/
                                 GetGuest.getUserPrice()

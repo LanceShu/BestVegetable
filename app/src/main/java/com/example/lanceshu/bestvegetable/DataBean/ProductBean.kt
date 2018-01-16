@@ -26,4 +26,7 @@ class ProductBean{
     /*产品备注*/
     var pNote : String = ""
 
+    /*产品数量*/
+    var pNum : Double = 0.0
+
 }
