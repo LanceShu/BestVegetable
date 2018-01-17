@@ -1,9 +1,11 @@
 package com.example.lanceshu.bestvegetable.Adapter;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.example.lanceshu.bestvegetable.Content;
 import com.example.lanceshu.bestvegetable.DataBean.ProductBean;
 import com.example.lanceshu.bestvegetable.R;
 
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,6 +90,16 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View view) {
                 Toast.makeText(context,name + "已下单" + editText.getText().toString() + "斤"
                         ,Toast.LENGTH_SHORT).show();
+
+                ContentValues values = new ContentValues();
+                Log.e("userName1",Content.userName);
+                values.put("puser",Content.userName);
+                values.put("pname",productBean.getPName());
+                values.put("pprice",productBean.getPPrice());
+                values.put("pnum",editText.getText().toString());
+                values.put("pimage",productBean.getPImagfile());
+                Content.database.insert("pOrder",null,values);
+
                 productBean.setPNum(Double.parseDouble(editText.getText().toString()));
                 Content.productBeans.add(productBean);
                 dialog.dismiss();

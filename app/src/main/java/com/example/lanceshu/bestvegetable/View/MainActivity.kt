@@ -1,6 +1,7 @@
 package com.example.lanceshu.bestvegetable.View
 
 import android.app.Dialog
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.Message
 import android.support.design.widget.NavigationView
@@ -17,6 +18,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.lanceshu.bestvegetable.Content
+import com.example.lanceshu.bestvegetable.DataBase.MyDataBaseHelper
 import com.example.lanceshu.bestvegetable.DataBean.GuestBean
 import com.example.lanceshu.bestvegetable.Fragemnet.*
 import com.example.lanceshu.bestvegetable.R
@@ -37,6 +39,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        Content.dataBaseHelper = MyDataBaseHelper(this@MainActivity,"BestVegetableDB.db",null,1)
+        Content.database = Content.dataBaseHelper.writableDatabase
         initData()
         initWight()
 
@@ -130,6 +134,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             Log.e("status",status)
                             if(status == "success"){
                                 Content.isLogin = true
+                                Content.userName = name.text.toString()
                                 GetGuest.getGuestInfor(resp)
                                 /*获取用户的报价单*/
                                 GetGuest.getUserPrice()
@@ -160,6 +165,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             Log.e("status",status)
                             if(status == "success"){
                                 Content.isLogin = true
+                                Content.userName = name.text.toString()
                                 GetGuest.getGuestInfor(resp)
                                 /*获取用户的报价单*/
                                 GetGuest.getUserPrice()

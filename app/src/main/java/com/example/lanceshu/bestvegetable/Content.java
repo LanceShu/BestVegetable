@@ -1,8 +1,10 @@
 package com.example.lanceshu.bestvegetable;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 
+import com.example.lanceshu.bestvegetable.DataBase.MyDataBaseHelper;
 import com.example.lanceshu.bestvegetable.DataBean.ProductBean;
 
 import java.util.ArrayList;
@@ -26,4 +28,9 @@ public class Content {
     public static List<ProductBean> productBeans = new ArrayList<>();
     /*登录状态*/
     public static boolean isLogin = false;
+
+    public static MyDataBaseHelper dataBaseHelper;
+    public static SQLiteDatabase database;
+
+    public static String userName;
 }

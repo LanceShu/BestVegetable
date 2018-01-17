@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.lanceshu.bestvegetable.DataBean.ProductBean;
 import com.example.lanceshu.bestvegetable.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         viewHolder.orderPrice.setText(productBean.getPPrice()+"元/"+productBean.getPUnit());
         viewHolder.orderNum.setText(productBean.getPNum()+"斤");
         double total = productBean.getPNum() * productBean.getPPrice();
-        viewHolder.orderTotal.setText("总共： " + total + " 元");
+        viewHolder.orderTotal.setText("总共： " + new DecimalFormat("#.00").format(total) + " 元");
     }
 
     @Override
